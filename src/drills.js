@@ -12,7 +12,7 @@ function findBySearchTerm(searchTerm){
     .then(result => console.log(result))
 }
 
-findBySearchTerm('burger'); //currently works
+// findBySearchTerm('burger'); //currently works
 
 function paginate(page){
     const productsPerPage = 10;
@@ -24,5 +24,27 @@ function paginate(page){
     .then(result => console.log(result))
 }
 
-paginate(4);
+// paginate(4);
 
+function getAfterDate(daysAgo) {
+    db.select('*')
+    .from('shopping_list')
+    .where(
+        'date_added',
+        '>',
+        db.raw(`now() - '?? days'::INTERVAL`, daysAgo)
+    )
+    .then(result => console.log(result))
+}
+
+// getAfterDate(3);
+
+function totalCost() {
+    db.select('category')
+    .from('shopping_list')
+    .groupBy('category')
+    .sum('price AS total')
+    .then(result => console.log(result))
+}
+
+// totalCost()
